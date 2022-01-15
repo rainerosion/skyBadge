@@ -24,6 +24,9 @@ function startApp(url) {
     });
 }
 
+/**
+ * 主要方法
+ */
 function startSky() {
     var menu_map = storage.get("menu");
     var options = Object.keys(menu_map).map(function (data) {
@@ -94,6 +97,13 @@ function startSky() {
     }
 }
 
+/**
+ * 判断是否为操作项
+ *
+ * @param key
+ * @param menu
+ * @returns {boolean}
+ */
 function isOptions(key, menu) {
     if (menu[key] == "add" || menu[key] == "delete" || menu[key] == "clear") {
         return true;
