@@ -60,10 +60,15 @@
 
 ## 渠道服务包名
 
-如果你正在使用渠道服，请修改脚本第15行的`com.netease.sky`为下表各个渠道对应的包名，目前收集到的包名见下表（不全）。
+如果你正在使用渠道服，请修改脚本第15行的`com.netease.sky`为下表中渠道对应的包名，目前收集到的各渠道包名见下表。
 
 | 包名                     | 渠道名称 |
 | ------------------------ | -------- |
 | com.netease.sky          | 网易     |
 | com.netease.sky.bilibili | 哔哩哔哩 |
 | com.netease.sky.aligames | 九游     |
+| com.netease.sky.nearme.gamecenter | Realme/OPPO |
+| com.netease.sky.m4399 | 4399 |
+| com.netease.sky.mi | 小米 |
+| com.netease.sky.vivo | VIVO |
+| com.tencent.tmgp.eyou.eygy | 应用宝 |
