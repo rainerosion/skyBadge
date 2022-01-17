@@ -18,8 +18,6 @@ function startApp(url) {
 
     if (package_name == null || package_name == undefined || package_name.length == 0) {
         toast("未选择渠道");
-        // 重新提示
-        startApp(url);
         return;
     }
     app.startActivity({
