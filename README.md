@@ -9,6 +9,7 @@
     <img src="https://img.shields.io/github/v/release/rainerosion/skyBadge?include_prereleases" alt="release">
   </a>
 </p>
+
 # [auto.js]光遇徽章使用脚本
 
 ## 初衷
