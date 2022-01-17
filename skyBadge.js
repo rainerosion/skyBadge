@@ -1,7 +1,5 @@
 "auto"
-// console.show();
 var storage = storages.create("com.netease.sky:badge");
-// storage.clear();
 var global_option = getMenu();
 if (!storage.contains("menu")) {
     storage.put("menu", global_option);
@@ -16,7 +14,7 @@ function startApp(url) {
     var package_name = getAppChannelPackageName();
     var class_name = "com.tgc.sky.netease.GameActivity_Netease";
 
-    if (package_name == null || package_name == undefined || package_name.length == 0) {
+    if (package_name == null || package_name.length === 0) {
         toast("未选择渠道");
         return;
     }
