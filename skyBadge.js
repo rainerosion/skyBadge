@@ -2,7 +2,7 @@
 // console.show();
 var storage = storages.create("com.netease.sky:badge");
 // storage.clear();
-var global_option = { "[O]录入徽章": "add", "[O]清空徽章": "clear", "[O]删除徽章": "delete" }
+var global_option = getMenu();
 if (!storage.contains("menu")) {
     storage.put("menu", global_option);
 }
@@ -12,15 +12,23 @@ startSky();
  * 打开app
  */
 function startApp(url) {
-    var packageName = 'com.netease.sky';
-    var className = 'com.tgc.sky.netease.GameActivity_Netease';
+    // 选择渠道
+    var package_name = getAppChannelPackageName();
+    var class_name = "com.tgc.sky.netease.GameActivity_Netease";
+
+    if (package_name == null || package_name == undefined || package_name.length == 0) {
+        toast("未选择渠道");
+        // 重新提示
+        startApp(url);
+        return;
+    }
     app.startActivity({
         action: "android.nfc.action.NDEF_DISCOVERED",
         category: "android.intent.category.DEFAULT",
         data: url,
         type: "https",
-        packageName: packageName,
-        className: className
+        packageName: package_name,
+        className: class_name
     });
 }
 
@@ -109,4 +117,37 @@ function isOptions(key, menu) {
         return true;
     }
     return false;
+}
+
+/**
+ * 渠道包名
+ * @returns 
+ */
+function getAppChannelPackageName() {
+    let package_map = {
+        "[C]网易": "com.netease.sky",
+        "[C]哔哩哔哩": "com.netease.sky.bilibili",
+        "[C]九游": "com.netease.sky.aligames",
+        "[C]OPPO": "com.netease.sky.nearme.gamecenter",
+        "[C]4399": "com.netease.sky.m4399",
+        "[C]小米": "com.netease.sky.mi",
+        "[C]VIVO": "com.netease.sky.vivo",
+        "[C]应用宝": "com.tencent.tmgp.eyou.eygy"
+    };
+    let channel_options = Object.keys(package_map).map(function (data) {
+        return data;
+    });
+    let index = dialogs.select("请选择渠道", channel_options);
+    let channel_name = channel_options[index];
+    let channel_package = package_map[channel_name];
+    console.log("channel:" + channel_name + ",package:" + channel_package);
+    return channel_package;
+}
+
+/**
+ * 全局菜单
+ * @returns 
+ */
+function getMenu() {
+    return { "[O]录入徽章": "add", "[O]清空徽章": "clear", "[O]删除徽章": "delete" };
 }
