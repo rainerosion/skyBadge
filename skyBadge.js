@@ -12,7 +12,7 @@ startSky();
 function startApp(url) {
     // 选择渠道
     var package_name = getAppChannelPackageName();
-    var class_name = "com.tgc.sky.netease.GameActivity_Netease";
+    var class_name = getClassName(package_name);
 
     if (package_name == null || package_name.length === 0) {
         toast("未选择渠道");
@@ -117,18 +117,20 @@ function isOptions(key, menu) {
 
 /**
  * 渠道包名
+ * 
  * @returns 
  */
 function getAppChannelPackageName() {
     let package_map = {
-        "[C]网易": "com.netease.sky",
-        "[C]哔哩哔哩": "com.netease.sky.bilibili",
-        "[C]九游": "com.netease.sky.aligames",
-        "[C]OPPO": "com.netease.sky.nearme.gamecenter",
-        "[C]4399": "com.netease.sky.m4399",
-        "[C]小米": "com.netease.sky.mi",
-        "[C]VIVO": "com.netease.sky.vivo",
-        "[C]应用宝": "com.tencent.tmgp.eyou.eygy"
+        "[C] 网易": "com.netease.sky",
+        "[C] 哔哩哔哩": "com.netease.sky.bilibili",
+        "[C] 九游": "com.netease.sky.aligames",
+        "[C] OPPO": "com.netease.sky.nearme.gamecenter",
+        "[C] 4399": "com.netease.sky.m4399",
+        "[C] 小米": "com.netease.sky.mi",
+        "[C] VIVO": "com.netease.sky.vivo",
+        "[C] 应用宝": "com.tencent.tmgp.eyou.eygy",
+        "[I] 国际服": "com.tgc.sky.android",
     };
     let channel_options = Object.keys(package_map).map(function (data) {
         return data;
@@ -142,8 +144,36 @@ function getAppChannelPackageName() {
 
 /**
  * 全局菜单
+ * 
  * @returns 
  */
 function getMenu() {
-    return { "[O]录入徽章": "add", "[O]清空徽章": "clear", "[O]删除徽章": "delete" };
+    return { "[O] 录入徽章": "add", "[O] 清空徽章": "clear", "[O] 删除徽章": "delete" };
+}
+
+/**
+ * 获取class
+ * 
+ * @param package_name 
+ */
+function getClassName(package_name) {
+    let china_class_name = "com.tgc.sky.netease.GameActivity_Netease";
+    let international_class_name = "com.tgc.sky.GameActivity";
+    if (isInternational(package_name)) {
+        return international_class_name;
+    } else {
+        return china_class_name;
+    }
+}
+
+/**
+ * 判断是否为国际服
+ * 
+ * @param package_name 
+ */
+function isInternational(package_name) {
+    if (package_name === "com.tgc.sky.android") {
+        return true;
+    }
+    return false;
 }
