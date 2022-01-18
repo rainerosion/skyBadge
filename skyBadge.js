@@ -11,8 +11,8 @@ startSky();
  */
 function startApp(url) {
     // 选择渠道
-    var package_name = getAppChannelPackageName();
-    var class_name = getClassName(package_name);
+    let package_name = getAppChannelPackageName();
+    let class_name = getClassName(package_name);
 
     if (package_name == null || package_name.length === 0) {
         toast("未选择渠道");
@@ -32,21 +32,21 @@ function startApp(url) {
  * 主要方法
  */
 function startSky() {
-    var menu_map = storage.get("menu");
-    var options = Object.keys(menu_map).map(function (data) {
+    let menu_map = storage.get("menu");
+    let options = Object.keys(menu_map).map(function (data) {
         return data;
     })
-    var i = dialogs.select("请选择一个选项", options);
+    let i = dialogs.select("请选择一个选项", options);
     if (i >= 0) {
         console.log(options[i]);
-        var value = menu_map[options[i]];
+        let value = menu_map[options[i]];
         if (value.length > 0) {
             switch (value) {
                 case "add":
                     toast("添加徽章");
-                    var name = rawInput("输入徽章名称").trim();
-                    var url = rawInput('输入徽章链接').trim();
-                    var isBadge = /^https:\/\/sky.thatg.co\/\?s=[\S]+$/.test(url);
+                    let name = rawInput("输入徽章名称").trim();
+                    let url = rawInput('输入徽章链接').trim();
+                    let isBadge = /^https:\/\/sky.thatg.co\/\?s=[\S]+$/.test(url);
                     if (name.length > 0 && isBadge) {
                         // 录入信息
                         name = "[徽章]" + name;
@@ -62,14 +62,14 @@ function startSky() {
                     }
                     break;
                 case "clear":
-                    var choice = dialogs.confirm("确定要清空所有徽章信息？");
+                    let choice = dialogs.confirm("确定要清空所有徽章信息？");
                     if (choice) {
                         storage.put("menu", global_option);
                     }
                     startSky();
                     break;
                 case "delete":
-                    var len = Object.keys(menu_map).length
+                    let len = Object.keys(menu_map).length
                     if (len > 3) {
                         delete_options = [];
                         Object.keys(menu_map).map(function (key, index) {
@@ -78,7 +78,7 @@ function startSky() {
                                 delete_options.push(key);
                             }
                         });
-                        var delete_index = dialogs.select("请选择需要删除的徽章", delete_options);
+                        let delete_index = dialogs.select("请选择需要删除的徽章", delete_options);
                         console.log(delete_options[delete_index]);
                         // 删除指定
                         delete menu_map[delete_options[delete_index]];
