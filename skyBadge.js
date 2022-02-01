@@ -1,5 +1,7 @@
 "auto"
+// 徽章数据
 var storage = storages.create("com.netease.sky:badge");
+// storage.clear();
 var global_option = getMenu();
 if (!storage.contains("menu")) {
     storage.put("menu", global_option);
@@ -32,7 +34,13 @@ function startApp(url) {
  * 主要方法
  */
 function startSky() {
-    let menu_map = storage.get("menu");
+    let current_channel = currentChannel();
+    let current_channel_name = "[C] 当前【" + current_channel["name"] + "】";
+    let current_map = {};
+    current_map[current_channel_name] = "channel";
+    console.log(current_map);
+
+    let menu_map = Object.assign(current_map, storage.get("menu"));
     let options = Object.keys(menu_map).map(function (data) {
         return data;
     })
@@ -90,6 +98,11 @@ function startSky() {
                         startSky();
                     }
                     break;
+                case "channel":
+                    // 选择渠道
+                    selectAppChannelPackageName();
+                    startSky();
+                    break;
                 default:
                     // 启动app
                     console.log(value);
@@ -109,18 +122,28 @@ function startSky() {
  * @returns {boolean}
  */
 function isOptions(key, menu) {
-    if (menu[key] == "add" || menu[key] == "delete" || menu[key] == "clear") {
+    if (menu[key] == "add" || menu[key] == "delete" || menu[key] == "clear" || menu[key] == "channel") {
         return true;
     }
     return false;
 }
 
 /**
- * 渠道包名
+ * 已选择的渠道包名
  * 
  * @returns 
  */
 function getAppChannelPackageName() {
+    let channel = storage.get("channel");
+    let package = channel["package"];
+    console.log("当前渠道包：" + package);
+    return package;
+}
+
+/**
+ * 选择渠道
+ */
+function selectAppChannelPackageName() {
     let package_map = {
         "[C] 网易": "com.netease.sky",
         "[C] 哔哩哔哩": "com.netease.sky.bilibili",
@@ -138,8 +161,12 @@ function getAppChannelPackageName() {
     let index = dialogs.select("请选择渠道", channel_options);
     let channel_name = channel_options[index];
     let channel_package = package_map[channel_name];
+    let channel_map = {
+        "name": channel_name.substring(4),
+        "package": channel_package
+    };
+    storage.put("channel", channel_map);
     console.log("channel:" + channel_name + ",package:" + channel_package);
-    return channel_package;
 }
 
 /**
@@ -148,7 +175,11 @@ function getAppChannelPackageName() {
  * @returns 
  */
 function getMenu() {
-    return { "[O] 录入徽章": "add", "[O] 清空徽章": "clear", "[O] 删除徽章": "delete" };
+    return {
+        "[O] 录入徽章": "add",
+        "[O] 清空徽章": "clear",
+        "[O] 删除徽章": "delete"
+    };
 }
 
 /**
@@ -176,4 +207,20 @@ function isInternational(package_name) {
         return true;
     }
     return false;
+}
+
+/**
+ * 获取当前渠道
+ */
+function currentChannel() {
+    // 未选择默认官服
+    if (!storage.contains("channel")) {
+        let channel_map = {
+            "name": "网易",
+            "package": "com.netease.sky"
+        };
+        // 设置默认渠道
+        storage.put("channel", channel_map);
+    }
+    return storage.get("channel");
 }
