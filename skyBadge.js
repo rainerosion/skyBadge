@@ -153,6 +153,7 @@ function selectAppChannelPackageName() {
         "[C] 小米": "com.netease.sky.mi",
         "[C] VIVO": "com.netease.sky.vivo",
         "[C] 应用宝": "com.tencent.tmgp.eyou.eygy",
+        "[C] 华为" : "com.netease.sky.huawei",
         "[I] 国际服": "com.tgc.sky.android",
     };
     let channel_options = Object.keys(package_map).map(function (data) {

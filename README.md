@@ -79,3 +79,4 @@
 | com.netease.sky.mi | 小米 |
 | com.netease.sky.vivo | VIVO |
 | com.tencent.tmgp.eyou.eygy | 应用宝 |
+| com.netease.sky.huawei | 华为 |
