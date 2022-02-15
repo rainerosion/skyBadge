@@ -43,7 +43,7 @@ function startSky() {
     let menu_map = Object.assign(current_map, storage.get("menu"));
     let options = Object.keys(menu_map).map(function (data) {
         return data;
-    })
+    });
     let i = dialogs.select("请选择一个选项", options);
     if (i >= 0) {
         console.log(options[i]);
@@ -59,7 +59,15 @@ function startSky() {
                         // 录入信息
                         name = "[徽章]" + name;
                         menu_map[name] = url;
-                        storage.put("menu", menu_map);
+                        storage_map = {};
+                        // 过滤数据
+                        Object.keys(menu_map).map(function (key, index) {
+                            console.log("key => " + key, "index => " + index);
+                            if (!isSwitchOptions(key, menu_map)) {
+                                storage_map[key] = menu_map[key]
+                            }
+                        });
+                        storage.put("menu", storage_map);
                         toast("徽章录入成功");
                         // 再次打开菜单
                         startSky();
@@ -80,17 +88,21 @@ function startSky() {
                     let len = Object.keys(menu_map).length
                     if (len > 3) {
                         delete_options = [];
+                        storage_map = {};
                         Object.keys(menu_map).map(function (key, index) {
                             console.log("key => " + key, "index => " + index);
                             if (!isOptions(key, menu_map)) {
                                 delete_options.push(key);
                             }
+                            if(!isSwitchOptions(key, menu_map)){
+                                storage_map[key] = menu_map[key]
+                            }
                         });
                         let delete_index = dialogs.select("请选择需要删除的徽章", delete_options);
                         console.log(delete_options[delete_index]);
                         // 删除指定
-                        delete menu_map[delete_options[delete_index]];
-                        storage.put("menu", menu_map);
+                        delete storage_map[delete_options[delete_index]];
+                        storage.put("menu", storage_map);
                         startSky();
                     } else {
                         toast("你没有录入任何徽章信息");
@@ -123,6 +135,20 @@ function startSky() {
  */
 function isOptions(key, menu) {
     if (menu[key] == "add" || menu[key] == "delete" || menu[key] == "clear" || menu[key] == "channel") {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * 判断是否为渠道切换操作项
+ *
+ * @param key
+ * @param menu
+ * @returns {boolean}
+ */
+ function isSwitchOptions(key, menu) {
+    if (menu[key] == "channel") {
         return true;
     }
     return false;
