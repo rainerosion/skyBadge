@@ -80,3 +80,4 @@
 | com.netease.sky.vivo | VIVO |
 | com.tencent.tmgp.eyou.eygy | 应用宝 |
 | com.netease.sky.huawei | 华为 |
+| com.tgc.sky.android | 国际服 |
