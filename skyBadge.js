@@ -1,6 +1,6 @@
 "auto"
 // 徽章数据
-var storage = storages.create("com.netease.sky:badge1");
+var storage = storages.create("com.netease.sky:badge");
 // storage.clear();
 var global_option = getMenu();
 if (!storage.contains("menu")) {
