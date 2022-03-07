@@ -81,3 +81,10 @@
 | com.tencent.tmgp.eyou.eygy | 应用宝 |
 | com.netease.sky.huawei | 华为 |
 | com.tgc.sky.android | 国际服 |
+| com.tgc.sky.android.test.gold | 测试服 |
+
+## 贡献
+
+特别鸣谢以下用户对本项目做出的贡献
+
+- [影灵3](https://github.com/1173922902)
