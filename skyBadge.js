@@ -1,6 +1,7 @@
 "auto"
+console.show();
 // 徽章数据
-var storage = storages.create("com.netease.sky:badge");
+var storage = storages.create("com.netease.sky:badge1");
 // storage.clear();
 var global_option = getMenu();
 if (!storage.contains("menu")) {
@@ -49,6 +50,8 @@ function startSky() {
         console.log(options[i]);
         let value = menu_map[options[i]];
         if (value.length > 0) {
+            // 计算菜单长度
+            let len = Object.keys(menu_map).length;
             switch (value) {
                 case "add":
                     toast("添加徽章");
@@ -85,8 +88,8 @@ function startSky() {
                     startSky();
                     break;
                 case "delete":
-                    let len = Object.keys(menu_map).length
-                    if (len > 4) {
+                    // let len = Object.keys(menu_map).length;
+                    if (len - 1 > Object.keys(getMenu()).length) {
                         delete_options = [];
                         storage_map = {};
                         Object.keys(menu_map).map(function (key, index) {
@@ -117,6 +120,52 @@ function startSky() {
                     break;
                 case "update":
                     // 更新徽章次数
+                    // let len = Object.keys(menu_map).length;
+                    console.log("len => " + len + " menuLen => " + Object.keys(getMenu()).length);
+                    if (len - 1 > Object.keys(getMenu()).length) {
+                        update_options = [];
+                        storage_map = {};
+                        Object.keys(menu_map).map(function (key, index) {
+                            console.log("key => " + key, "index => " + index);
+                            if (!isOptions(key, menu_map)) {
+                                update_options.push(key);
+                            }
+                            if (!isSwitchOptions(key, menu_map)) {
+                                storage_map[key] = menu_map[key]
+                            }
+                        });
+                        let update_index = dialogs.select("请选择需要更新的徽章", update_options);
+                        console.log("update => " + update_options[update_index]);
+                        // 获取数据
+                        let uri = storage_map[update_options[update_index]];
+                        // 截取前缀
+                        let prefix = uri.substring(0, uri.length - 6);
+                        // 计数器
+                        let counter = uri.substring(uri.length - 6);
+                        console.log("prefix => " + prefix + ",counter => " + counter + ",counterDec => " + hex2dec(counter));
+                        // 保存数据
+                        let num = rawInput("请在输入框输入新的次数，当前:" + hex2dec(counter) + "次").trim();
+                        rules = /^[0-9]+$/;
+                        if (rules.test(num)) {
+                            if (num < hex2dec(counter)) {
+                                toast("将要更新的次数[" + num + "]小于当前次数[" + hex2dec(counter) + "]可能会无法使用，请悉知!!!");
+                            }
+                            // 转换为16进制
+                            let counter_hex = dec2hex(num, 6)
+                            console.log("num => " + num + ",hex => " + counter_hex + "newData => " + (prefix + counter_hex));
+                            // 更新数据
+                            storage_map[update_options[update_index]] = prefix + counter_hex;
+                            storage.put("menu", storage_map);
+                        } else {
+                            toast("徽章次数只能输入整数。");
+                            return;
+                        }
+                        startSky();
+                    } else {
+                        toast("你没有录入任何徽章信息");
+                        // 再次打开菜单
+                        startSky();
+                    }
                     break;
                 default:
                     // 启动app
@@ -263,11 +312,11 @@ function currentChannel() {
 
 /**
  * 16进制转10进制
- * @param {*} num 16进制
+ * @param {*} hex 16进制
  * @returns 
  */
-function hex2dec(num) {
-    return parseInt(num, 16);
+function hex2dec(hex) {
+    return parseInt(hex, 16);
 }
 
 /**
@@ -287,5 +336,5 @@ function dec2hex(dec, len) {
     if (len) {
         while (hex.length < len) hex = '0' + hex;
     }
-    return '0x' + hex;
+    return hex;
 }
