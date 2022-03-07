@@ -237,6 +237,7 @@ function selectAppChannelPackageName() {
         "[C] 应用宝": "com.tencent.tmgp.eyou.eygy",
         "[C] 华为": "com.netease.sky.huawei",
         "[I] 国际服": "com.tgc.sky.android",
+        "[T] 测试服": "com.tgc.sky.android.test.gold",
     };
     let channel_options = Object.keys(package_map).map(function (data) {
         return data;
@@ -274,7 +275,8 @@ function getMenu() {
 function getClassName(package_name) {
     let china_class_name = "com.tgc.sky.netease.GameActivity_Netease";
     let international_class_name = "com.tgc.sky.GameActivity";
-    if (isInternational(package_name)) {
+    // 测试服务和国际服class一致
+    if (isInternational(package_name) || isTest(package_name)) {
         return international_class_name;
     } else {
         return china_class_name;
@@ -288,6 +290,19 @@ function getClassName(package_name) {
  */
 function isInternational(package_name) {
     if (package_name === "com.tgc.sky.android") {
+        return true;
+    }
+    return false;
+}
+
+
+/**
+ * 判断是否为测试服
+ * 
+ * @param package_name 
+ */
+function isTest(package_name) {
+    if (package_name === "com.tgc.sky.android.test.gold") {
         return true;
     }
     return false;
