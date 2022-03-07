@@ -1,5 +1,4 @@
 "auto"
-console.show();
 // 徽章数据
 var storage = storages.create("com.netease.sky:badge1");
 // storage.clear();
@@ -135,14 +134,14 @@ function startSky() {
                             }
                         });
                         let update_index = dialogs.select("请选择需要更新的徽章", update_options);
-                        console.log("update => " + update_options[update_index]);
+                        // console.log("update => " + update_options[update_index]);
                         // 获取数据
                         let uri = storage_map[update_options[update_index]];
                         // 截取前缀
                         let prefix = uri.substring(0, uri.length - 6);
                         // 计数器
                         let counter = uri.substring(uri.length - 6);
-                        console.log("prefix => " + prefix + ",counter => " + counter + ",counterDec => " + hex2dec(counter));
+                        // console.log("prefix => " + prefix + ",counter => " + counter + ",counterDec => " + hex2dec(counter));
                         // 保存数据
                         let num = rawInput("请在输入框输入新的次数，当前:" + hex2dec(counter) + "次").trim();
                         rules = /^[0-9]+$/;
@@ -152,7 +151,7 @@ function startSky() {
                             }
                             // 转换为16进制
                             let counter_hex = dec2hex(num, 6)
-                            console.log("num => " + num + ",hex => " + counter_hex + "newData => " + (prefix + counter_hex));
+                            // console.log("num => " + num + ",hex => " + counter_hex + "newData => " + (prefix + counter_hex));
                             // 更新数据
                             storage_map[update_options[update_index]] = prefix + counter_hex;
                             storage.put("menu", storage_map);
