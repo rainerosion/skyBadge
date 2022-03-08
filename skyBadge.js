@@ -166,6 +166,40 @@ function startSky() {
                         startSky();
                     }
                     break;
+                case "sort":
+                    // 变更徽章位置
+                    // let len = Object.keys(menu_map).length;
+                    console.log("len => " + len + " menuLen => " + Object.keys(getMenu()).length);
+                    if (len - 1 > Object.keys(getMenu()).length) {
+                        sort_options = [];
+                        storage_map = global_option;//初始化
+                        Object.keys(menu_map).map(function (key, index) {
+                            console.log("key => " + key, "index => " + index);
+                            if (!isOptions(key, menu_map)) {
+                                sort_options.push(key);
+                            }
+                        });
+                        let befor_index = dialogs.select("请选择需要变更位置的徽章", sort_options);
+                        let after_index = dialogs.select("请选择变更后的位置", sort_options);
+                        if(befor_index==after_index){toast("两次选项一样。");return;}
+                        for(var x=0;x<len;x++){//map重排序
+                            if(x==befor_index){
+                                storage_map[sort_options[after_index]] = menu_map[sort_options[after_index]];
+                            }else if(x==after_index){
+                                storage_map[sort_options[befor_index]] = menu_map[sort_options[befor_index]];
+                            }else{
+                                storage_map[sort_options[x]] = menu_map[sort_options[x]];
+                            }
+                        }
+                            storage.put("menu", storage_map);
+                            toast("位置替换成功，请重新运行");
+                            return;
+                    } else {
+                        toast("你没有录入任何徽章信息");
+                        // 再次打开菜单
+                        startSky();
+                    }
+                    break;    
                 default:
                     // 启动app
                     console.log(value);
@@ -190,6 +224,7 @@ function isOptions(key, menu) {
         || menu[key] == "clear"
         || menu[key] == "channel"
         || menu[key] == "update"
+        || menu[key] == "sort"
     ) {
         return true;
     }
@@ -263,7 +298,8 @@ function getMenu() {
         "[O] 录入徽章": "add",
         "[O] 清空徽章": "clear",
         "[O] 删除徽章": "delete",
-        "[O] 更新次数": "update"
+        "[O] 更新次数": "update",
+        "[O] 徽章排序": "sort"
     };
 }
 
