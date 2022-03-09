@@ -223,12 +223,12 @@ function startSky() {
  * @returns {boolean}
  */
 function isOptions(key, menu) {
-    if (menu[key] == "add"
-        || menu[key] == "delete"
-        || menu[key] == "clear"
-        || menu[key] == "channel"
-        || menu[key] == "update"
-        || menu[key] == "sort"
+    if (menu[key] === "add"
+        || menu[key] === "delete"
+        || menu[key] === "clear"
+        || menu[key] === "channel"
+        || menu[key] === "update"
+        || menu[key] === "sort"
     ) {
         return true;
     }
@@ -243,7 +243,7 @@ function isOptions(key, menu) {
  * @returns {boolean}
  */
 function isSwitchOptions(key, menu) {
-    if (menu[key] == "channel") {
+    if (menu[key] === "channel") {
         return true;
     }
     return false;
