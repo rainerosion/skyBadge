@@ -171,8 +171,8 @@ function startSky() {
                     // let len = Object.keys(menu_map).length;
                     console.log("len => " + len + " menuLen => " + Object.keys(getMenu()).length);
                     if (len - 1 > Object.keys(getMenu()).length) {
-                        sort_options = [];
-                        storage_map = global_option;//初始化
+                        let sort_options = [];
+                        let storage_map = global_option;//初始化
                         Object.keys(menu_map).map(function (key, index) {
                             console.log("key => " + key, "index => " + index);
                             if (!isOptions(key, menu_map)) {
@@ -181,25 +181,29 @@ function startSky() {
                         });
                         let befor_index = dialogs.select("请选择需要变更位置的徽章", sort_options);
                         let after_index = dialogs.select("请选择变更后的位置", sort_options);
-                        if(befor_index==after_index){toast("两次选项一样。");return;}
-                        for(var x=0;x<len;x++){//map重排序
-                            if(x==befor_index){
+                        if (befor_index === after_index) {
+                            toast("两次选项一样。");
+                            return;
+                        }
+                        // map重排序
+                        for (let x = 0; x < len; x++) {
+                            if (x === befor_index) {
                                 storage_map[sort_options[after_index]] = menu_map[sort_options[after_index]];
-                            }else if(x==after_index){
+                            } else if (x === after_index) {
                                 storage_map[sort_options[befor_index]] = menu_map[sort_options[befor_index]];
-                            }else{
+                            } else {
                                 storage_map[sort_options[x]] = menu_map[sort_options[x]];
                             }
                         }
-                            storage.put("menu", storage_map);
-                            toast("位置替换成功，请重新运行");
-                            return;
+                        storage.put("menu", storage_map);
+                        toast("位置替换成功，请重新运行");
+                        return;
                     } else {
                         toast("你没有录入任何徽章信息");
                         // 再次打开菜单
                         startSky();
                     }
-                    break;    
+                    break;
                 default:
                     // 启动app
                     console.log(value);
@@ -247,8 +251,8 @@ function isSwitchOptions(key, menu) {
 
 /**
  * 已选择的渠道包名
- * 
- * @returns 
+ *
+ * @returns
  */
 function getAppChannelPackageName() {
     let channel = storage.get("channel");
@@ -290,8 +294,8 @@ function selectAppChannelPackageName() {
 
 /**
  * 全局菜单
- * 
- * @returns 
+ *
+ * @returns
  */
 function getMenu() {
     return {
@@ -305,8 +309,8 @@ function getMenu() {
 
 /**
  * 获取class
- * 
- * @param package_name 
+ *
+ * @param package_name
  */
 function getClassName(package_name) {
     let china_class_name = "com.tgc.sky.netease.GameActivity_Netease";
@@ -321,8 +325,8 @@ function getClassName(package_name) {
 
 /**
  * 判断是否为国际服
- * 
- * @param package_name 
+ *
+ * @param package_name
  */
 function isInternational(package_name) {
     if (package_name === "com.tgc.sky.android") {
@@ -334,8 +338,8 @@ function isInternational(package_name) {
 
 /**
  * 判断是否为测试服
- * 
- * @param package_name 
+ *
+ * @param package_name
  */
 function isTest(package_name) {
     if (package_name === "com.tgc.sky.android.test.gold") {
@@ -363,7 +367,7 @@ function currentChannel() {
 /**
  * 16进制转10进制
  * @param {*} hex 16进制
- * @returns 
+ * @returns
  */
 function hex2dec(hex) {
     return parseInt(hex, 16);
@@ -371,10 +375,10 @@ function hex2dec(hex) {
 
 /**
  * 10进制转16进制
- * 
+ *
  * @param {*} dec 10进制
  * @param {*} len 长度
- * @returns 
+ * @returns
  */
 function dec2hex(dec, len) {
     var hex = "";
