@@ -77,19 +77,20 @@
 
 <s>如果你正在使用渠道服，请修改脚本第15行的com.netease.sky为下表中渠道对应的包名，</s>目前无需修改，各渠道包名见下表。
 
-| 包名                     | 渠道名称 |
-| ------------------------ | -------- |
-| com.netease.sky          | 网易     |
-| com.netease.sky.bilibili | 哔哩哔哩 |
-| com.netease.sky.aligames | 九游     |
+| 包名                     | 渠道名称        |
+| ------------------------ |-------------|
+| com.netease.sky          | 网易          |
+| com.netease.sky.bilibili | 哔哩哔哩        |
+| com.netease.sky.aligames | 九游          |
 | com.netease.sky.nearme.gamecenter | Realme/OPPO |
-| com.netease.sky.m4399 | 4399 |
-| com.netease.sky.mi | 小米 |
-| com.netease.sky.vivo | VIVO |
-| com.tencent.tmgp.eyou.eygy | 应用宝 |
-| com.netease.sky.huawei | 华为 |
-| com.tgc.sky.android | 国际服 |
-| com.tgc.sky.android.test.gold | 测试服 |
+| com.netease.sky.m4399 | 4399        |
+| com.netease.sky.mi | 小米          |
+| com.netease.sky.vivo | VIVO        |
+| com.tencent.tmgp.eyou.eygy | 应用宝         |
+| com.netease.sky.huawei | 华为          |
+| com.tgc.sky.android | 国际服         |
+| com.tgc.sky.android.test.gold | 测试服         |
+| com.tgc.sky.android.huawei | 华为国际服       |
 
 ## 更新日志
 
@@ -120,10 +121,16 @@
 
 - 添加自定义徽章排序功能【由用户 [影灵3](https://github.com/1173922902) 贡献 】
 
+### 2022.05.04
+
+- 添加华为国际服支持
+
 
 ## 贡献
 
 特别鸣谢以下用户的贡献
 
 - [影灵3](https://github.com/1173922902)
+
+## 
 

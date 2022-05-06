@@ -275,6 +275,7 @@ function selectAppChannelPackageName() {
         "[C] VIVO": "com.netease.sky.vivo",
         "[C] 应用宝": "com.tencent.tmgp.eyou.eygy",
         "[C] 华为": "com.netease.sky.huawei",
+        "[I] 华为国际服": "com.tgc.sky.android.huawei",
         "[I] 国际服": "com.tgc.sky.android",
         "[T] 测试服": "com.tgc.sky.android.test.gold",
     };
@@ -329,7 +330,7 @@ function getClassName(package_name) {
  * @param package_name
  */
 function isInternational(package_name) {
-    if (package_name === "com.tgc.sky.android") {
+    if (package_name === "com.tgc.sky.android" || package_name === "com.tgc.sky.android.huawei") {
         return true;
     }
     return false;
